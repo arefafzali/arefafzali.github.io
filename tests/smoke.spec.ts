@@ -31,10 +31,9 @@ test.describe('home page', () => {
     await expect(cells).toHaveCount(4);
   });
 
-  test('contact exposes email and CV link', async ({ page }) => {
+  test('contact exposes email', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', /mailto:/);
-    await expect(page.getByRole('link', { name: /Download CV/ })).toHaveAttribute('href', '/Aref_Resume.pdf');
+    await expect(page.locator('a[href^="mailto:"]').first()).toHaveAttribute('href', /mailto:/);
   });
 
   test('notes index route renders without crashing', async ({ page }) => {

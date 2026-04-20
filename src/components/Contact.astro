@@ -1,4 +1,6 @@
 ---
+import ContactForm from '@/components/ContactForm.astro';
+
 const links = [
   { href: 'mailto:afzaliaref.aa@gmail.com', label: 'afzaliaref.aa@gmail.com' },
   { href: 'https://www.linkedin.com/in/arefafzali/', label: 'LinkedIn → in/arefafzali' },
@@ -16,10 +18,9 @@ const links = [
           <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}>{l.label}</a>
         </li>
       ))}
-      <li>
-        <a href="/Aref_Resume.pdf" target="_blank" rel="noopener noreferrer">Download CV →</a>
-      </li>
     </ul>
+
+    <ContactForm />
   </div>
 </section>
 
