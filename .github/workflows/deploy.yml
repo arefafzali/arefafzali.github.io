@@ -24,21 +24,21 @@ jobs:
           node-version-file: .node-version
           cache: npm
       - run: npm ci
-      - name: Fail early if Notion secrets are missing
+      - run: npm run check
+      - run: npm test
+      - name: Warn about missing Notion secrets
         run: |
           if [ -z "${NOTION_TOKEN}" ] || [ -z "${NOTION_NOTES_DATABASE_ID}" ]; then
-            echo "::error::NOTION_TOKEN and NOTION_NOTES_DATABASE_ID must be set as repository secrets."
-            exit 1
+            echo "::warning::NOTION_TOKEN and/or NOTION_NOTES_DATABASE_ID are not set — the Notes section will render empty. Add them in repo Settings → Secrets when you want the Notes pipeline active."
           fi
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_NOTES_DATABASE_ID: ${{ secrets.NOTION_NOTES_DATABASE_ID }}
-      - run: npm run check
-      - run: npm test
       - run: npm run build
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_NOTES_DATABASE_ID: ${{ secrets.NOTION_NOTES_DATABASE_ID }}
+          PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.PUBLIC_FORMSPREE_ENDPOINT }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
