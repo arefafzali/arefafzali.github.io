@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import ThesisGraph from '@/components/ThesisGraph.astro';
+
+const items = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+<section id="projects" class="projects" aria-labelledby="projects-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="label">§ Projects &amp; Research</p>
+      <h2 id="projects-title" class="section-title">A selection, <em>plainly told</em>.</h2>
+    </header>
+
+    <div class="grid">
+      {items.map((p) => (
+        <article class={`card ${p.data.kind === 'thesis' ? 'card-thesis' : ''}`}>
+          {p.data.kind === 'thesis' && (
+            <Fragment>
+              <ThesisGraph />
+              <p class="plate label">Plate II · Thesis</p>
+            </Fragment>
+          )}
+          <p class="label"><span class="k">{p.data.kind}</span> · {p.data.year}</p>
+          <h3>{p.data.title}</h3>
+          <p class="summary">{p.data.summary}</p>
+          {p.data.highlights.length > 0 && (
+            <ul class="highlights">
+              {p.data.highlights.map(h => <li>{h}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.projects { padding-block: var(--section-y); }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+.card {
+  position: relative;
+  padding: 1.6rem 1.6rem 1.8rem;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.card .label .k { color: var(--accent); text-transform: uppercase; }
+.card h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--step-2);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0.4rem 0 0.6rem;
+}
+.card .summary { margin: 0 0 0.75rem; color: var(--ink); }
+.highlights { margin: 0; padding-left: 1.1rem; color: var(--ink-muted); font-size: var(--step-0); }
+.highlights li + li { margin-top: 0.2rem; }
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0.25rem 0 2rem;
+}
+.section-title em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+.card-thesis { background: var(--paper); }
+.card-thesis .thesis-graph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.card-thesis > *:not(.thesis-graph) { position: relative; z-index: 1; }
+.card-thesis .plate {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  margin: 0;
+  color: var(--ink-muted);
+  letter-spacing: 0.22em;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
