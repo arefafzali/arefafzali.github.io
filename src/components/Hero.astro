@@ -21,7 +21,7 @@ import portrait from '@/assets/portrait.jpg';
           format="webp"
           quality={82}
         />
-        <figcaption class="hero-plate">Plate I · Afzali</figcaption>
+        <figcaption class="hero-plate" aria-hidden="true">Plate I · Afzali</figcaption>
       </figure>
     </div>
 
@@ -116,20 +116,22 @@ import portrait from '@/assets/portrait.jpg';
   .hero-portrait img { width: 120px; }
 }
 
-/* staggered fade-in-up on load */
-.hero-kicker, .hero-title, .hero-portrait, .hero-lede, .hero-roles, .hero-rule, .hero-foot {
-  opacity: 0;
-  transform: translateY(8px);
-  animation: rise 0.7s cubic-bezier(.2,.6,.2,1) forwards;
-}
-.hero-kicker   { animation-delay: 0.05s; }
-.hero-title    { animation-delay: 0.15s; }
-.hero-portrait { animation-delay: 0.20s; }
-.hero-lede     { animation-delay: 0.35s; }
-.hero-roles    { animation-delay: 0.45s; }
-.hero-rule     { animation-delay: 0.55s; }
-.hero-foot     { animation-delay: 0.60s; }
-@keyframes rise {
-  to { opacity: 1; transform: none; }
+/* staggered fade-in-up on load — only when motion is allowed */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-kicker, .hero-title, .hero-portrait, .hero-lede, .hero-roles, .hero-rule, .hero-foot {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: rise 0.7s cubic-bezier(.2,.6,.2,1) forwards;
+  }
+  .hero-kicker   { animation-delay: 0.05s; }
+  .hero-title    { animation-delay: 0.15s; }
+  .hero-portrait { animation-delay: 0.20s; }
+  .hero-lede     { animation-delay: 0.35s; }
+  .hero-roles    { animation-delay: 0.45s; }
+  .hero-rule     { animation-delay: 0.55s; }
+  .hero-foot     { animation-delay: 0.60s; }
+  @keyframes rise {
+    to { opacity: 1; transform: none; }
+  }
 }
 </style>
