@@ -1,0 +1,40 @@
+---
+import '@/styles/global.css';
+import Nav from '@/components/Nav.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  pathname?: string;
+}
+
+const {
+  title = 'Aref Afzali — Software & ML Engineer',
+  description = 'Software & ML engineer, co-founder, and graduate researcher. Building LLM agents, retrieval systems, and graph research from Montréal.',
+  pathname = Astro.url.pathname
+} = Astro.props;
+
+const canonical = new URL(pathname, Astro.site ?? 'https://arefafzali.github.io').toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <slot />
+  </body>
+</html>

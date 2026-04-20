@@ -1,0 +1,53 @@
+---
+import { loadNotes } from '@/lib/notion';
+const notes = (await loadNotes()).slice(0, 5);
+---
+<section id="notes" class="notes-preview" aria-labelledby="notes-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="label">§ Notes</p>
+      <h2 id="notes-title" class="section-title">Recent writing.</h2>
+    </header>
+
+    {notes.length === 0 ? (
+      <p class="empty">No published notes yet. <a href="/notes/">Coming soon →</a></p>
+    ) : (
+      <ol class="list">
+        {notes.map(n => (
+          <li>
+            <a href={`/notes/${n.slug}/`}>
+              <time class="label">{n.date}</time>
+              <span class="title">{n.title}</span>
+              {n.dek && <span class="dek">— {n.dek}</span>}
+            </a>
+          </li>
+        ))}
+      </ol>
+    )}
+    <p class="all"><a href="/notes/">View all notes →</a></p>
+  </div>
+</section>
+
+<style>
+.notes-preview { padding-block: var(--section-y); }
+.section-title { font-family: var(--font-serif); font-weight: 300; font-size: var(--step-4); line-height: 1.02; margin: 0.25rem 0 2rem; }
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.list li { border-bottom: 1px solid var(--rule); }
+.list a {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 0.9rem;
+  background: none;
+}
+.list a:hover .title { color: var(--accent); }
+.list time { color: var(--ink-muted); letter-spacing: 0.18em; }
+.list .title { font-family: var(--font-serif); font-size: var(--step-1); }
+.list .dek { color: var(--ink-muted); font-style: italic; font-size: var(--step-0); grid-column: 2 / -1; }
+.all { margin-top: 1.5rem; }
+.empty { color: var(--ink-muted); }
+@media (max-width: 640px) {
+  .list a { grid-template-columns: 1fr; gap: 0.2rem; }
+}
+</style>

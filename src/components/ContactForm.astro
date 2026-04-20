@@ -1,0 +1,119 @@
+---
+// Backed by Formspree (https://formspree.io) — free tier handles
+// the low volume this site will see. Set PUBLIC_FORMSPREE_ENDPOINT
+// in .env and as a GitHub Actions build secret. When unset, the
+// form degrades to a direct mailto link.
+const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT;
+---
+
+<div class="contact-form-wrap">
+  {endpoint ? (
+    <form class="contact-form" method="POST" action={endpoint}>
+      <div class="grid">
+        <label class="field">
+          <span class="label">Name</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="field">
+          <span class="label">Email</span>
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label">Subject <span class="opt">— optional</span></span>
+        <input type="text" name="subject" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        <span class="label">Message</span>
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+
+      <input type="text" name="_gotcha" class="gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="actions">
+        <button type="submit">Send message →</button>
+      </div>
+    </form>
+  ) : (
+    <p class="fallback">
+      The message form isn't configured in this environment. Reach out on LinkedIn, GitHub, or Telegram below.
+    </p>
+  )}
+</div>
+
+<style>
+.contact-form-wrap { margin-top: 2rem; }
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 640px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.field { display: grid; gap: 0.35rem; }
+
+.field .label { color: var(--ink-muted); }
+.field .opt {
+  color: var(--ink-muted);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: none;
+}
+
+.field input,
+.field textarea {
+  font: inherit;
+  font-family: var(--font-serif);
+  font-size: var(--step-0);
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.65rem 0.8rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  width: 100%;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--paper);
+}
+
+.field textarea { resize: vertical; min-height: 7rem; }
+
+.gotcha { display: none !important; }
+
+.actions { display: flex; justify-content: flex-end; }
+
+button[type="submit"] {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  padding: 0.7rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+button[type="submit"]:hover { background: var(--accent); border-color: var(--accent); }
+
+.fallback { color: var(--ink-muted); }
+.fallback a { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
