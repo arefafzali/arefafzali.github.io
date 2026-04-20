@@ -1,17 +1,22 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { loadNotes } from '@/lib/notion';
-import { marked } from 'marked';
-import createDOMPurify from 'isomorphic-dompurify';
+import { marked, Renderer } from 'marked';
 
 export async function getStaticPaths() {
   const notes = await loadNotes();
   return notes.map(n => ({ params: { slug: n.slug }, props: { note: n } }));
 }
 
+// Strip raw HTML blocks and inline tags from Notion-sourced markdown
+// to prevent a Notion author (or compromised integration) from
+// injecting arbitrary HTML/JS into the rendered page. Using a marked
+// renderer override keeps the sanitization step dependency-free.
+const renderer = new Renderer();
+renderer.html = () => '';
+
 const { note } = Astro.props;
-const rawHtml = await marked.parse(note.body);
-const html = createDOMPurify.sanitize(rawHtml);
+const html = await marked.parse(note.body, { renderer });
 ---
 <Base title={`${note.title} — Aref Afzali`} description={note.dek}>
   <main id="main" class="container note">
