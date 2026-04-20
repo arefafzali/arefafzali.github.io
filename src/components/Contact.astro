@@ -1,0 +1,63 @@
+---
+const links = [
+  { href: 'mailto:afzaliaref.aa@gmail.com', label: 'afzaliaref.aa@gmail.com' },
+  { href: 'https://www.linkedin.com/in/arefafzali/', label: 'LinkedIn → in/arefafzali' },
+  { href: 'https://github.com/arefafzali', label: 'GitHub → @arefafzali' },
+  { href: 'https://telegram.im/@arefafzali', label: 'Telegram → @arefafzali' }
+];
+---
+<section id="contact" class="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <p class="label">§ Contact</p>
+    <h2 id="contact-title" class="section-title">Say hello.</h2>
+    <ul class="links">
+      {links.map(l => (
+        <li>
+          <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}>{l.label}</a>
+        </li>
+      ))}
+      <li>
+        <a href="/Aref_Resume.pdf" target="_blank" rel="noopener noreferrer">Download CV →</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="container foot-inner">
+    <span>© {new Date().getFullYear()} Aref Afzali</span>
+    <span>Built in Astro · Montréal</span>
+  </div>
+</footer>
+
+<style>
+.contact { padding-block: var(--section-y) clamp(2rem, 4vw, 3rem); }
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: var(--step-4);
+  line-height: 1.02;
+  margin: 0.25rem 0 1.25rem;
+}
+.links { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.links li { padding-block: 0.9rem; border-bottom: 1px solid var(--rule); }
+.links a {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.site-foot {
+  border-top: 1px solid var(--rule);
+  padding-block: 1.5rem;
+  background: var(--paper-2);
+}
+.foot-inner {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+</style>
