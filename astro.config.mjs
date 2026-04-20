@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
   site: 'https://arefafzali.github.io',
@@ -9,7 +10,9 @@ export default defineConfig({
   },
   vite: {
     resolve: {
-      alias: { '@': '/src' }
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
     }
   }
 });
