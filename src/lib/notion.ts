@@ -74,3 +74,12 @@ export async function fetchPublishedNotes(opts: FetchOpts): Promise<NoteEntry[]>
 
   return notes;
 }
+
+export async function loadNotes(): Promise<NoteEntry[]> {
+  const token = import.meta.env.NOTION_TOKEN;
+  const databaseId = import.meta.env.NOTION_NOTES_DATABASE_ID;
+  if (!token || !databaseId) {
+    return [];
+  }
+  return fetchPublishedNotes({ token, databaseId });
+}

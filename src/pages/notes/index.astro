@@ -1,0 +1,41 @@
+---
+import Base from '@/layouts/Base.astro';
+import { loadNotes } from '@/lib/notion';
+
+const notes = await loadNotes();
+---
+<Base title="Notes — Aref Afzali" description="Writing by Aref Afzali.">
+  <main id="main" class="container notes">
+    <header>
+      <p class="label">§ Notes</p>
+      <h1 class="title">Writing, occasionally.</h1>
+    </header>
+    {notes.length === 0 ? (
+      <p class="empty">No published notes yet. Check back shortly.</p>
+    ) : (
+      <ol class="list">
+        {notes.map(n => (
+          <li>
+            <a href={`/notes/${n.slug}/`}>
+              <time class="label">{n.date}</time>
+              <h2>{n.title}</h2>
+              {n.dek && <p class="dek">{n.dek}</p>}
+            </a>
+          </li>
+        ))}
+      </ol>
+    )}
+  </main>
+</Base>
+
+<style>
+.notes { padding-block: clamp(3rem, 6vw, 5rem); }
+.title { font-family: var(--font-serif); font-weight: 300; font-size: var(--step-4); line-height: 1.02; margin: 0.25rem 0 2rem; }
+.list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+.list li { border-bottom: 1px solid var(--rule); }
+.list a { display: block; padding-block: 1.1rem; background: none; }
+.list a:hover h2 { color: var(--accent); }
+.list h2 { font-family: var(--font-serif); font-weight: 400; font-size: var(--step-2); margin: 0.1rem 0 0.2rem; }
+.list .dek { margin: 0; color: var(--ink-muted); }
+.empty { color: var(--ink-muted); }
+</style>

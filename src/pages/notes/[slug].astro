@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import { loadNotes } from '@/lib/notion';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const notes = await loadNotes();
+  return notes.map(n => ({ params: { slug: n.slug }, props: { note: n } }));
+}
+
+const { note } = Astro.props;
+const html = marked.parse(note.body);
+---
+<Base title={`${note.title} — Aref Afzali`} description={note.dek}>
+  <main id="main" class="container note">
+    <p class="label"><a href="/notes/">← Notes</a> · <time>{note.date}</time></p>
+    <h1>{note.title}</h1>
+    {note.dek && <p class="dek">{note.dek}</p>}
+    <article set:html={html} />
+  </main>
+</Base>
+
+<style>
+.note { padding-block: clamp(3rem, 6vw, 5rem); max-width: 720px; }
+.note h1 { font-family: var(--font-serif); font-weight: 400; font-size: var(--step-4); line-height: 1.05; letter-spacing: -0.02em; margin: 0.25rem 0 0.5rem; }
+.note .dek { color: var(--ink-muted); font-style: italic; margin: 0 0 2rem; font-size: var(--step-1); }
+.note article h2 { font-family: var(--font-serif); font-weight: 500; font-size: var(--step-2); margin-top: 2rem; }
+.note article p { line-height: 1.7; }
+.note article code { font-family: var(--font-mono); font-size: 0.9em; background: var(--paper-2); padding: 0.1em 0.3em; border-radius: 2px; }
+.note article pre { background: var(--paper-2); padding: 1rem; border-radius: 4px; overflow-x: auto; }
+.note article pre code { background: none; padding: 0; }
+.note article blockquote { border-left: 2px solid var(--accent); margin-left: 0; padding-left: 1rem; color: var(--ink-muted); font-style: italic; }
+</style>
