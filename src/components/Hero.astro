@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '@/assets/portrait.jpg';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <p class="label hero-kicker">Software &amp; Machine Learning · Montréal</p>
+
+    <div class="hero-top">
+      <h1 id="hero-title" class="hero-title">
+        Building quiet systems<br />
+        for <em>noisy</em> problems.
+      </h1>
+      <figure class="hero-portrait">
+        <Image
+          src={portrait}
+          alt="Portrait of Aref Afzali"
+          width={220}
+          height={280}
+          loading="eager"
+          format="webp"
+          quality={82}
+        />
+        <figcaption class="hero-plate">Plate I · Afzali</figcaption>
+      </figure>
+    </div>
+
+    <p class="hero-lede">
+      I build, ship, and research ML-driven products — from co-founding <strong>Qliqless.ai</strong>
+      to retrieval systems in production to graph research at <strong>Concordia</strong>.
+    </p>
+
+    <p class="hero-roles label">
+      Co-Founder <span class="dot">·</span> ML Engineer <span class="dot">·</span> Researcher
+    </p>
+
+    <div class="rule hero-rule"></div>
+    <div class="hero-foot">
+      <span>Montréal · QC</span>
+      <span>M.Sc. Concordia</span>
+      <span>Est. 2017</span>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero { padding-block: clamp(3rem, 6vw, 5.5rem) clamp(2.5rem, 5vw, 4.5rem); }
+.hero-kicker { margin: 0 0 1.75rem; color: var(--accent); }
+.hero-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: var(--step-5);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 300;
+}
+.hero-portrait { margin: 0; position: relative; }
+.hero-portrait img {
+  width: clamp(120px, 14vw, 180px);
+  height: auto;
+  border-radius: 2px;
+  filter: grayscale(0.15) contrast(1.02);
+}
+.hero-plate {
+  position: absolute;
+  left: -6px;
+  bottom: -10px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+}
+.hero-lede {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--step-2);
+  line-height: 1.4;
+  color: #3a3128;
+  max-width: 52ch;
+  margin: 2rem 0 0;
+}
+.hero-lede strong { font-style: normal; font-weight: 500; color: var(--ink); }
+.hero-roles { margin: 1.25rem 0 0; color: var(--ink-muted); }
+.hero-roles .dot { color: var(--rule-strong); padding-inline: 0.4rem; }
+.hero-rule { margin: 2.5rem 0 0.9rem; }
+.hero-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 640px) {
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-portrait { order: -1; }
+  .hero-portrait img { width: 120px; }
+}
+
+/* staggered fade-in-up on load */
+.hero-kicker, .hero-title, .hero-portrait, .hero-lede, .hero-roles, .hero-rule, .hero-foot {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: rise 0.7s cubic-bezier(.2,.6,.2,1) forwards;
+}
+.hero-kicker   { animation-delay: 0.05s; }
+.hero-title    { animation-delay: 0.15s; }
+.hero-portrait { animation-delay: 0.20s; }
+.hero-lede     { animation-delay: 0.35s; }
+.hero-roles    { animation-delay: 0.45s; }
+.hero-rule     { animation-delay: 0.55s; }
+.hero-foot     { animation-delay: 0.60s; }
+@keyframes rise {
+  to { opacity: 1; transform: none; }
+}
+</style>
