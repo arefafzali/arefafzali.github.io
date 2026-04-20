@@ -1,0 +1,28 @@
+:root {
+  /* palette */
+  --paper:      #f4ede2;
+  --paper-2:    #efe7d9;
+  --ink:        #1f1a15;
+  --ink-muted:  rgba(31, 26, 21, 0.62);
+  --ink-soft:   rgba(31, 26, 21, 0.45);
+  --accent:     #7a5a2b;
+  --rule:       rgba(31, 26, 21, 0.18);
+  --rule-strong:rgba(31, 26, 21, 0.35);
+
+  /* type */
+  --font-serif: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* scale */
+  --step-0:  clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+  --step-1:  clamp(1.1rem,  1.0rem + 0.4vw, 1.25rem);
+  --step-2:  clamp(1.35rem, 1.1rem + 1.0vw, 1.75rem);
+  --step-3:  clamp(1.75rem, 1.3rem + 2.0vw, 2.5rem);
+  --step-4:  clamp(2.5rem,  1.8rem + 3.5vw, 4rem);
+  --step-5:  clamp(3.5rem,  2.2rem + 5.5vw, 6rem);
+
+  /* layout */
+  --container: 1180px;
+  --gutter:    clamp(1.25rem, 2vw, 2.25rem);
+  --section-y: clamp(4rem, 7vw, 7rem);
+}
