@@ -31,9 +31,11 @@ test.describe('home page', () => {
     await expect(cells).toHaveCount(4);
   });
 
-  test('contact exposes email', async ({ page }) => {
+  test('contact exposes a message form', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('a[href^="mailto:"]').first()).toHaveAttribute('href', /mailto:/);
+    await expect(page.locator('#contact form')).toBeVisible();
+    await expect(page.locator('#contact form input[name="email"]')).toBeVisible();
+    await expect(page.locator('#contact form textarea[name="message"]')).toBeVisible();
   });
 
   test('notes index route renders without crashing', async ({ page }) => {
